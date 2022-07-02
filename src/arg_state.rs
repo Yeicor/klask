@@ -1,9 +1,9 @@
-use crate::{settings::LocalizationSettings, Klask};
 use clap::{Arg, ValueHint};
-use eframe::egui::{widgets::Widget, ComboBox, Response, TextEdit, Ui};
+use eframe::egui::{ComboBox, Response, TextEdit, Ui, widgets::Widget};
 use inflector::Inflector;
-use native_dialog::FileDialog;
 use uuid::Uuid;
+
+use crate::{Klask, settings::LocalizationSettings};
 
 #[derive(Debug, Clone)]
 pub struct ArgState<'s> {
@@ -125,21 +125,22 @@ impl<'s> ArgState<'s> {
 
         let inner_response = if possible.is_empty() {
             ui.horizontal(|ui| {
-                if matches!(
-                    value_hint,
-                    ValueHint::AnyPath | ValueHint::FilePath | ValueHint::ExecutablePath
-                ) && ui.button(&localization.select_file).clicked()
+                #[cfg(any(target_os = "linux", target_os = "macos", target_os = "windows"))]
                 {
-                    if let Some(file) = FileDialog::new().show_open_single_file().ok().flatten() {
-                        *value = file.to_string_lossy().into_owned();
+                    if matches!(value_hint, ValueHint::AnyPath | ValueHint::FilePath | ValueHint::ExecutablePath) &&
+                        ui.button(&localization.select_file).clicked()
+                    {
+                        if let Some(file) = native_dialog::FileDialog::new().show_open_single_file().ok().flatten() {
+                            *value = file.to_string_lossy().into_owned();
+                        }
                     }
-                }
 
-                if matches!(value_hint, ValueHint::AnyPath | ValueHint::DirPath)
-                    && ui.button(&localization.select_directory).clicked()
-                {
-                    if let Some(file) = FileDialog::new().show_open_single_dir().ok().flatten() {
-                        *value = file.to_string_lossy().into_owned();
+                    if matches!(value_hint, ValueHint::AnyPath | ValueHint::DirPath)
+                        && ui.button(&localization.select_directory).clicked()
+                    {
+                        if let Some(file) = native_dialog::FileDialog::new().show_open_single_dir().ok().flatten() {
+                            *value = file.to_string_lossy().into_owned();
+                        }
                     }
                 }
 

@@ -5,6 +5,7 @@ use inflector::Inflector;
 use std::collections::BTreeMap;
 use uuid::Uuid;
 
+/// Command configuration UI Widget useful for embedding in an egui application
 #[derive(Debug, Clone)]
 pub struct AppState<'s> {
     id: Uuid,
@@ -15,6 +16,7 @@ pub struct AppState<'s> {
 }
 
 impl<'s> AppState<'s> {
+    /// Create a new AppState
     pub fn new(app: &Command, localization: &'s LocalizationSettings) -> Self {
         let args = app
             .get_arguments()
@@ -39,6 +41,7 @@ impl<'s> AppState<'s> {
         }
     }
 
+    /// Update the validation error of the field with the given name
     pub fn update_validation_error(&mut self, name: &str, message: &str) {
         for arg in &mut self.args {
             arg.update_validation_error(name, message);
@@ -52,6 +55,7 @@ impl<'s> AppState<'s> {
         }
     }
 
+    /// Retrieves the command-line arguments that would result on the given configuration
     pub fn get_cmd_args(&self, mut args: Vec<String>) -> Result<Vec<String>, String> {
         for arg in &self.args {
             args = arg.get_cmd_args(args)?;

@@ -25,6 +25,7 @@
 //! }
 //! ```
 
+/// Command configuration UI Widget useful for embedding in an egui application
 pub mod app_state;
 mod arg_state;
 mod child_app;
@@ -38,7 +39,6 @@ use child_app::{ChildApp, StdinType};
 use clap::{ArgMatches, Command, FromArgMatches, IntoApp};
 use eframe::{Frame, egui::{self, Button, Color32, Context, FontData, FontDefinitions, Grid, Style, TextEdit, Ui}, CreationContext};
 use error::ExecutionError;
-use native_dialog::FileDialog;
 
 use output::Output;
 pub use settings::{LocalizationSettings, Settings};
@@ -206,9 +206,10 @@ impl eframe::App for Klask<'_> {
 
                             let localization = self.localization;
                             ui.horizontal(|ui| {
+                                #[cfg(any(target_os = "linux", target_os = "macos", target_os = "windows"))]
                                 if ui.button(&localization.select_directory).clicked() {
                                     if let Some(file) =
-                                        FileDialog::new().show_open_single_dir().ok().flatten()
+                                        native_dialog::FileDialog::new().show_open_single_dir().ok().flatten()
                                     {
                                         *path = file.to_string_lossy().into_owned();
                                     }
@@ -425,8 +426,9 @@ impl Klask<'_> {
         match stdin {
             StdinType::File(path) => {
                 ui.horizontal(|ui| {
+                    #[cfg(any(target_os = "linux", target_os = "macos", target_os = "windows"))]
                     if ui.button(&localization.select_file).clicked() {
-                        if let Some(file) = FileDialog::new().show_open_single_file().ok().flatten()
+                        if let Some(file) = native_dialog::FileDialog::new().show_open_single_file().ok().flatten()
                         {
                             *path = file.to_string_lossy().into_owned();
                         }
