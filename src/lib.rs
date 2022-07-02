@@ -25,7 +25,7 @@
 //! }
 //! ```
 
-mod app_state;
+pub mod app_state;
 mod arg_state;
 mod child_app;
 mod error;
