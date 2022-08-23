@@ -91,9 +91,8 @@ pub fn run_app(app: Command<'static>, settings: Settings, f: impl FnOnce(&ArgMat
             localization,
             style: settings.style,
         };
-        let native_options = eframe::NativeOptions::default();
         #[cfg(not(target_arch = "wasm32"))]
-        eframe::run_native(app_name.as_str(), native_options, Box::new(|cc| {
+        eframe::run_native(app_name.as_str(), eframe::NativeOptions::default(), Box::new(|cc| {
             klask.setup(cc);
             Box::new(klask)
         }));
