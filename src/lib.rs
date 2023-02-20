@@ -262,7 +262,7 @@ impl eframe::App for Klask<'_> {
 
                     if self.is_child_running() {
                         let mut running_text = String::from(&self.localization.running);
-                        for _ in 0..((2.0 * ui.input().time) as i32 % 4) {
+                        for _ in 0..((2.0 * ui.input(|i| i.time)) as i32 % 4) {
                             running_text.push('.')
                         }
                         ui.label(running_text);
