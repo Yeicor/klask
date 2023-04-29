@@ -7,12 +7,6 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::io::Write;
 
-use cansi::{CategorisedSlice, Color};
-use eframe::egui::{Color32, Label, ProgressBar, RichText, Ui, vec2, Widget};
-use linkify::{LinkFinder, LinkKind};
-
-use crate::child_app::ChildApp;
-use crate::error::ExecutionError;
 
 /// Displays a progress bar in the output. First call creates
 /// a progress bar and future calls update it.

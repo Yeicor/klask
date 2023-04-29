@@ -35,7 +35,7 @@ pub mod settings;
 
 use app_state::AppState;
 use child_app::{ChildApp, StdinType};
-use clap::{ArgMatches, Command, FromArgMatches, IntoApp};
+use clap::{ArgMatches, App, FromArgMatches, IntoApp};
 use eframe::{
     egui::{self, Button, Color32, Context, FontData, FontDefinitions, Grid, Style, TextEdit, Ui},
     CreationContext, Frame,
@@ -61,7 +61,7 @@ const CHILD_APP_ENV_VAR: &str = "KLASK_CHILD_APP";
 /// });
 /// ```
 #[cfg(not(target_arch = "wasm32"))]
-pub fn run_app(app: Command<'static>, settings: Settings, f: impl FnOnce(&ArgMatches)) {
+pub fn run_app(app: App<'static>, settings: Settings, f: impl FnOnce(&ArgMatches)) {
     if std::env::var(CHILD_APP_ENV_VAR).is_ok() {
         std::env::remove_var(CHILD_APP_ENV_VAR);
 
@@ -104,7 +104,7 @@ pub fn run_app(app: Command<'static>, settings: Settings, f: impl FnOnce(&ArgMat
                 klask.setup(cc);
                 Box::new(klask)
             }),
-        );
+        ).unwrap();
     }
 }
 
@@ -149,7 +149,7 @@ struct Klask<'s> {
     output: Output,
     // This isn't a generic lifetime because eframe::run_native() requires
     // a 'static lifetime because boxed trait objects default to 'static
-    app: Command<'static>,
+    app: App<'static>,
 
     custom_font: Option<Cow<'static, [u8]>>,
     localization: &'s Localization,

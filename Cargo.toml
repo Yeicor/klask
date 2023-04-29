@@ -11,19 +11,20 @@ keywords = ["clap", "gui", "ui", "cli", "egui"]
 
 [dependencies]
 Inflector = { version = "0.11.4", default-features = false }
-cansi = "2.2.0"
+cansi = "2.2.1"
 clap = { version = "3", default-features = false, features = [
     "std",
     "derive",
     "unicode",
 ] }
-clap_derive = { version = "=3.0.0" }
+clap_derive = { version = "3" }
 uuid = { version = "1.3", features = ["v4"] }
 eframe = { version = "0.21", default-features = false, features = [
     "default_fonts", "glow"
 ] }
 linkify = "0.9"
 thiserror = "1.0"
+rfd = "0.11.3"
 
 [target.'cfg(not(target_os = "windows"))'.dependencies]
 native-dialog = "0.6.2"
