@@ -234,7 +234,7 @@ where
     assert_eq!(c, expected);
 }
 
-fn enter_consecutive<const N: usize>(args: &mut Vec<ArgState>, vals: [&str; N]) {
+fn enter_consecutive<const N: usize>(args: &mut [ArgState], vals: [&str; N]) {
     for i in 0..N {
         args[i].enter(vals[i]);
     }

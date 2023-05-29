@@ -30,12 +30,14 @@
 //! * The "Run" button in the GUI is pressed ⇾ `CHILD_APP_ENV_VAR` is set, the binary is started again. Arguments are passed to `stdin` and `stdout` is intercepted for displaying output.
 //! * The binary is run with `CHILD_APP_ENV_VAR` ⇾ the user-provided closure is run.
 
+/// App state
 pub mod app_state;
 mod arg_state;
 mod child_app;
 mod error;
 /// Additional options for output like progress bars.
 pub mod output;
+/// Settings
 pub mod settings;
 
 use app_state::AppState;
