@@ -7,7 +7,6 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::io::Write;
 
-
 /// Displays a progress bar in the output. First call creates
 /// a progress bar and future calls update it.
 ///
@@ -108,7 +107,7 @@ impl Widget for &mut Output {
                 // View
                 ui.vertical(|ui| {
                     if ui.button("Copy output").clicked() {
-                        ui.ctx().output_mut(|p|
+                        ui.ctx().output_mut(|p| {
                             p.copied_text = output
                                 .iter()
                                 .map(|(_, o)| match o {
@@ -117,7 +116,8 @@ impl Widget for &mut Output {
                                 })
                                 .flat_map(|text| cansi::v3::categorise_text(text))
                                 .map(|slice| slice.text)
-                                .collect::<String>());
+                                .collect::<String>()
+                        });
                     }
 
                     for (_, o) in output {
@@ -134,7 +134,7 @@ impl Widget for &mut Output {
                         }
                     }
                 })
-                    .response
+                .response
             }
         }
     }
@@ -174,7 +174,7 @@ impl OutputType {
         }
     }
 
-    pub fn parse<'a>(iter: &mut impl Iterator<Item=&'a str>) -> Option<Self> {
+    pub fn parse<'a>(iter: &mut impl Iterator<Item = &'a str>) -> Option<Self> {
         match iter.next() {
             // Add a newline here for copying out text
             Some(Self::PROGRESS_BAR_STR) => Some(Self::ProgressBar(

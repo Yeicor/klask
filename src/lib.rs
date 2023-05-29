@@ -40,7 +40,7 @@ pub mod settings;
 
 use app_state::AppState;
 use child_app::{ChildApp, StdinType};
-use clap::{ArgMatches, App, FromArgMatches, IntoApp};
+use clap::{App, ArgMatches, FromArgMatches, IntoApp};
 use eframe::{
     egui::{self, Button, Color32, Context, FontData, FontDefinitions, Grid, Style, TextEdit, Ui},
     CreationContext, Frame,
@@ -109,7 +109,8 @@ pub fn run_app(app: App<'static>, settings: Settings, f: impl FnOnce(&ArgMatches
                 klask.setup(cc);
                 Box::new(klask)
             }),
-        ).unwrap();
+        )
+        .unwrap();
     }
 }
 
