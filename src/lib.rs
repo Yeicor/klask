@@ -48,7 +48,7 @@ use eframe::{
     CreationContext, Frame,
 };
 use error::ExecutionError;
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "rfd")]
 use rfd::FileDialog;
 
 use output::Output;
