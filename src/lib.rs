@@ -224,7 +224,7 @@ impl eframe::App for Klask<'_> {
                             let localization = self.localization;
                             ui.horizontal(|ui| {
                                 if ui.button(&localization.select_directory).clicked() {
-                                    #[cfg(not(target_arch = "wasm32"))]
+                                    #[cfg(feature = "rfd")]
                                     if let Some(file) = FileDialog::new().pick_folder() {
                                         *path = file.to_string_lossy().into_owned();
                                     }
@@ -443,7 +443,7 @@ impl Klask<'_> {
             StdinType::File(path) => {
                 ui.horizontal(|ui| {
                     if ui.button(&localization.select_file).clicked() {
-                        #[cfg(not(target_arch = "wasm32"))]
+                        #[cfg(feature = "rfd")]
                         if let Some(file) = FileDialog::new().pick_file() {
                             *path = file.to_string_lossy().into_owned();
                         }
