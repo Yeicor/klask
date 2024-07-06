@@ -109,7 +109,7 @@ pub fn run_app(app: App<'static>, settings: Settings, f: impl FnOnce(&ArgMatches
             native_options,
             Box::new(|cc| {
                 klask.setup(cc);
-                Box::new(klask)
+                Ok(Box::new(klask))
             }),
         )
         .unwrap();
