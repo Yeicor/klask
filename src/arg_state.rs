@@ -157,7 +157,7 @@ impl<'s> ArgState<'s> {
                 Some(())
             })
         } else {
-            ComboBox::from_id_source(id)
+            ComboBox::from_id_salt(id)
                 .selected_text(&*value)
                 .show_ui(ui, |ui| {
                     if optional {

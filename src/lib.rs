@@ -458,7 +458,7 @@ impl Klask<'_> {
     }
 
     fn set_error_style(ui: &mut Ui) {
-        let mut style = ui.style_mut();
+        let style = ui.style_mut();
         style.visuals.widgets.inactive.bg_stroke.color = Color32::RED;
         style.visuals.widgets.inactive.bg_stroke.width = 1.0;
         style.visuals.widgets.hovered.bg_stroke.color = Color32::RED;
